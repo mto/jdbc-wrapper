@@ -1,0 +1,8 @@
+target
+*.iml
+.gradle
+bin
+build
+.classpath
+.project
+gradle.properties
