@@ -22,6 +22,8 @@
 
 package com.hs.sql;
 
+import com.hs.md.Profile;
+
 import java.sql.Array;
 import java.sql.Blob;
 import java.sql.CallableStatement;
@@ -43,28 +45,31 @@ import java.util.concurrent.Executor;
 
 public class ConnectionWrapper extends BasicWrapper<Connection>implements Connection {
 
-  public ConnectionWrapper(final Connection target) {
+  private final Profile prof;
+
+  public ConnectionWrapper(final Connection target, final Profile prof) {
     super(target);
+    this.prof = prof;
   }
 
   @Override
   public Statement createStatement() throws SQLException {
-    return target.createStatement();
+    return new StatementWrapper(target.createStatement(), prof);
   }
 
   @Override
   public PreparedStatement prepareStatement(final String sql) throws SQLException {
-    return target.prepareStatement(sql);
+    return new PreparedStatementWrapper(target.prepareStatement(sql), prof);
   }
 
   @Override
   public CallableStatement prepareCall(final String sql) throws SQLException {
-    return target.prepareCall(sql);
+    return new CallableStatementWrapper(target.prepareCall(sql), prof);
   }
 
   @Override
   public String nativeSQL(final String sql) throws SQLException {
-    return target.nativeSQL(sql);
+    return target.nativeSQL(prof.rewriteSQL(sql));
   }
 
   @Override

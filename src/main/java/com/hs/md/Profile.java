@@ -37,23 +37,28 @@ public class Profile {
         jdbcParams.put(key, value);
     }
 
-    public List<SQLRewriter> getSQLRewriters(){
+    public List<SQLRewriter> getSQLRewriters() {
         return Collections.unmodifiableList(sqlRewriters);
     }
 
     public String rewriteSQL(String sql) {
-        for (SQLRewriter rw : sqlRewriters) {
-            Matcher m = rw.pattern.matcher(sql);
-            if (m.matches()) {
-                StringBuffer buf = new StringBuffer();
-                m.appendReplacement(buf, rw.replacement);
-                m.appendTail(buf);
+        String tmp = sql;
 
-                return buf.toString();
+        for (SQLRewriter rw : sqlRewriters) {
+            Matcher m = rw.pattern.matcher(tmp);
+            if (m.find()) {
+                StringBuffer buf = new StringBuffer();
+
+                do {
+                    m.appendReplacement(buf, rw.replacement);
+                } while (m.find());
+
+                m.appendTail(buf);
+                tmp = buf.toString();
             }
         }
 
-        return sql;
+        return tmp;
     }
 
     public static class Builder {

@@ -22,6 +22,8 @@
 
 package com.hs.sql;
 
+import com.hs.md.Profile;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,8 +32,11 @@ import java.sql.Statement;
 
 public class StatementWrapper extends BasicWrapper<Statement>implements Statement {
 
-  public StatementWrapper(final Statement target) {
+  private final Profile prof;
+
+  public StatementWrapper(final Statement target, final Profile prof) {
     super(target);
+    this.prof = prof;
   }
 
   @Override

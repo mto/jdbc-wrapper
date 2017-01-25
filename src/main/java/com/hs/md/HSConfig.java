@@ -13,6 +13,14 @@ import java.util.Map;
  */
 public class HSConfig {
 
+    public final static String JDBC_URL_PARAM_NAME = "jdbcURL";
+
+    public final static String JDBC_DRIVER_PARAM_NAME = "jdbcDriver";
+
+    public final static String JDBC_DB_PRODUCT_PARAM_NAME = "DatabaseProductName";
+
+    public final static String JDBC_DB_MAJOR_VERSION_NAME = "DatabaseMajorVersion";
+
     private static volatile HSConfig instance;
 
     private Map<String, Profile> profiles = new HashMap<>();

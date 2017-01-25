@@ -22,6 +22,8 @@
 
 package com.hs.sql;
 
+import com.hs.md.Profile;
+
 import java.io.InputStream;
 import java.io.Reader;
 import java.math.BigDecimal;
@@ -48,8 +50,11 @@ import java.util.Calendar;
 
 public class PreparedStatementWrapper extends BasicWrapper<PreparedStatement>implements PreparedStatement {
 
-  public PreparedStatementWrapper(final PreparedStatement target) {
+  private final Profile prof;
+
+  public PreparedStatementWrapper(final PreparedStatement target, final Profile prof) {
     super(target);
+    this.prof = prof;
   }
 
   @Override

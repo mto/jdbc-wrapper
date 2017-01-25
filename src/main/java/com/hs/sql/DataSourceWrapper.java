@@ -22,6 +22,8 @@
 
 package com.hs.sql;
 
+import com.hs.md.Profile;
+
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -32,18 +34,21 @@ import javax.sql.DataSource;
 
 public class DataSourceWrapper extends BasicWrapper<DataSource>implements DataSource {
 
-  public DataSourceWrapper(final DataSource target) {
+  private final Profile prof;
+
+  public DataSourceWrapper(final DataSource target, final Profile prof) {
     super(target);
+    this.prof = prof;
   }
 
   @Override
   public Connection getConnection() throws SQLException {
-    return target.getConnection();
+     return new ConnectionWrapper(target.getConnection(), prof);
   }
 
   @Override
   public Connection getConnection(final String username, final String password) throws SQLException {
-    return target.getConnection(username, password);
+    return new ConnectionWrapper(target.getConnection(username, password), prof);
   }
 
   @Override
