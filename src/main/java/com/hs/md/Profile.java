@@ -46,12 +46,14 @@ public class Profile {
 
         for (SQLRewriter rw : sqlRewriters) {
             Matcher m = rw.pattern.matcher(tmp);
-            if (m.find()) {
+            boolean result = m.find();
+            if (result) {
                 StringBuffer buf = new StringBuffer();
 
                 do {
                     m.appendReplacement(buf, rw.replacement);
-                } while (m.find());
+                    result = m.find();
+                } while (result);
 
                 m.appendTail(buf);
                 tmp = buf.toString();

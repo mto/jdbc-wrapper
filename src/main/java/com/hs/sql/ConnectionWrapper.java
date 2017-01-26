@@ -59,7 +59,7 @@ public class ConnectionWrapper extends BasicWrapper<Connection>implements Connec
 
   @Override
   public PreparedStatement prepareStatement(final String sql) throws SQLException {
-    return new PreparedStatementWrapper(target.prepareStatement(sql), prof);
+    return new PreparedStatementWrapper(target.prepareStatement(prof.rewriteSQL(sql)), prof);
   }
 
   @Override

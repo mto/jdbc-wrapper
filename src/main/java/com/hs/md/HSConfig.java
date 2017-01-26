@@ -60,7 +60,7 @@ public class HSConfig {
 
             String line;
             while ((line = rd.readLine()) != null) {
-                if (!line.isEmpty()) {
+                if (!line.isEmpty() && line.charAt(0) != '#') {
                     processLine(line, pBuilders);
                 }
             }
