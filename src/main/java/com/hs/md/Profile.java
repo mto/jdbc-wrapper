@@ -1,5 +1,8 @@
 package com.hs.md;
 
+import com.hs.log.HSLogger;
+import com.hs.log.HSLoggerFactory;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -20,6 +23,8 @@ public class Profile {
     private Map<String, String> jdbcParams = new HashMap<>();
 
     private List<SQLRewriter> sqlRewriters = new LinkedList<>();
+
+    private static HSLogger log = HSLoggerFactory.getLogger(Profile.class);
 
     public String getName() {
         return name;
@@ -42,12 +47,14 @@ public class Profile {
     }
 
     public String rewriteSQL(String sql) {
+        log.trace("Start rewriting SQL query [ " + sql + " ] via the profile " + getName());
         String tmp = sql;
 
         for (SQLRewriter rw : sqlRewriters) {
             Matcher m = rw.pattern.matcher(tmp);
             boolean result = m.find();
             if (result) {
+                log.debug("Incremental SQL query [ " + tmp + " ] matches with the pattern " + rw.getRegex() + " from the profile " + getName());
                 StringBuffer buf = new StringBuffer();
 
                 do {
@@ -57,6 +64,7 @@ public class Profile {
 
                 m.appendTail(buf);
                 tmp = buf.toString();
+                log.debug("Subsequences matching the pattern " + rw.getRegex() + " were replaced with " + rw.getReplacement() + " . The new incremental query is [ " + tmp + " ]");
             }
         }
 
