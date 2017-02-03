@@ -54,7 +54,7 @@ public class Profile {
             Matcher m = rw.pattern.matcher(tmp);
             boolean result = m.find();
             if (result) {
-                log.debug("Incremental SQL query [ " + tmp + " ] matches with the pattern " + rw.getRegex() + " from the profile " + getName());
+                log.debug("Incremental SQL query [ " + tmp + " ] matches with the pattern [ " + rw.getRegex() + " ] from the profile " + getName());
                 StringBuffer buf = new StringBuffer();
 
                 do {
@@ -64,7 +64,7 @@ public class Profile {
 
                 m.appendTail(buf);
                 tmp = buf.toString();
-                log.debug("Subsequences matching the pattern " + rw.getRegex() + " were replaced with " + rw.getReplacement() + " . The new incremental query is [ " + tmp + " ]");
+                log.debug("Subsequences matching the pattern [ " + rw.getRegex() + " ] were replaced with [ " + rw.getReplacement() + " ]. The new incremental query is [ " + tmp + " ]");
             }
         }
 
