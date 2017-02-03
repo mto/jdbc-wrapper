@@ -161,7 +161,7 @@ public class StatementWrapper extends BasicWrapper<Statement>implements Statemen
 
   @Override
   public void addBatch(final String sql) throws SQLException {
-    target.addBatch(sql);
+    target.addBatch(prof.rewriteSQL(sql));
   }
 
   @Override
