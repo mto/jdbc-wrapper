@@ -19,7 +19,7 @@ public class XADataSourceWrapper implements XADataSource {
 
     private Profile prof;
 
-    public XADataSourceWrapper(XADataSource target){
+    public XADataSourceWrapper(XADataSource target) {
         this(target, null);
     }
 
@@ -33,18 +33,18 @@ public class XADataSourceWrapper implements XADataSource {
      *
      * @param prof
      */
-    public void injectProfile(Profile prof){
+    public void injectProfile(Profile prof) {
         this.prof = prof;
     }
 
     @Override
     public XAConnection getXAConnection() throws SQLException {
-        return new XAConnectionWrapper(target.getXAConnection(), prof);
+        return prof == null ? target.getXAConnection() : new XAConnectionWrapper(target.getXAConnection(), prof);
     }
 
     @Override
     public XAConnection getXAConnection(String user, String password) throws SQLException {
-        return new XAConnectionWrapper(target.getXAConnection(user, password), prof);
+        return prof == null ? target.getXAConnection(user, password) : new XAConnectionWrapper(target.getXAConnection(user, password), prof);
     }
 
     @Override
