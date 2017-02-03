@@ -15,12 +15,25 @@ import java.util.logging.Logger;
  */
 public class XADataSourceWrapper implements XADataSource {
 
-    private final XADataSource target;
+    private XADataSource target;
 
     private Profile prof;
 
+    public XADataSourceWrapper(XADataSource target){
+        this(target, null);
+    }
+
     public XADataSourceWrapper(XADataSource target, Profile prof) {
         this.target = target;
+        this.prof = prof;
+    }
+
+    /**
+     * This method is needed when instantiate object via JNDI object factory
+     *
+     * @param prof
+     */
+    public void injectProfile(Profile prof){
         this.prof = prof;
     }
 
