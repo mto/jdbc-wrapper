@@ -3,7 +3,6 @@ package com.hs.mysql;
 import com.hs.md.HSConfig;
 import com.hs.md.Profile;
 import com.mysql.jdbc.NonRegisteringDriver;
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import com.mysql.jdbc.jdbc2.optional.MysqlXADataSource;
 
 import javax.naming.Context;
@@ -98,8 +97,7 @@ public class MYSQLXADataSourceFactory implements ObjectFactory {
             dataSource.setPropertiesViaRef(ref);
             dataSource.setUrl(jdbcURL);
 
-            MYSQLXADataSource msqlDs = new MYSQLXADataSource(dataSource);
-            msqlDs.injectProfile(prof);
+            MYSQLXADataSource msqlDs = new MYSQLXADataSource(dataSource, dataSource, prof);
 
             return msqlDs;
         }

@@ -34,7 +34,7 @@ import javax.sql.DataSource;
 
 public class DataSourceWrapper extends BasicWrapper<DataSource>implements DataSource {
 
-  private final Profile prof;
+  protected final Profile prof;
 
   public DataSourceWrapper(final DataSource target, final Profile prof) {
     super(target);
